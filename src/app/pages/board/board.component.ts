@@ -7,11 +7,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { BtnComponent } from '../../components/btn/btn.component';
+import { FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [NavbarComponent, DragDropModule, CommonModule, FormsModule, FontAwesomeModule],
+  imports: [NavbarComponent, DragDropModule, CommonModule, FormsModule, FontAwesomeModule, BtnComponent, ReactiveFormsModule],
   templateUrl: './board.component.html',
   styles: [`
       .cdk-drop-list-dragging .cdk-drag {
@@ -26,7 +29,8 @@ export class BoardComponent {
 
   faPlus = faPlus
 
-  newColumnTItle:string ='' 
+  newColumnTitle = new FormControl<string>('') 
+  miControl = new FormControl<string>('');
 
   columns: Column[] = [
     {
@@ -66,13 +70,36 @@ export class BoardComponent {
     }
   }
 
-  addColumn() {
-    if(this.newColumnTItle.trim()) {
-      this.columns.push({
-        title: this.newColumnTItle,
-        todos:[]
-      })
-      this.newColumnTItle = ''
+  dropColumn(event: CdkDragDrop<ToDo[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      )
     }
   }
+
+  addColumn() {
+    if(this.newColumnTitle.value?.trim()) {
+      this.columns.push({
+        title: this.newColumnTitle.value,
+        todos:[]
+      })
+      this.newColumnTitle.setValue('')
+    }
+  }
+
+  addCard(title:string) {
+    if(this.miControl.value?.trim()) {
+      const obj = this.columns.find(t => t.title === title)
+      obj?.todos.push({id: Date.now().toString(), title: this.miControl.value ?? ''})
+      this.miControl.setValue('')
+    }
+  }
+
+
 }
