@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -10,6 +10,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { BtnComponent } from '../../components/btn/btn.component';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TodoModalComponent } from '../../components/todo-modal/todo-modal.component';
+import { Dialog } from '@angular/cdk/dialog'
 
 @Component({
   selector: 'app-board',
@@ -26,6 +28,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     `]
 })
 export class BoardComponent {
+
+  constructor(private dialog: Dialog) { }
 
   faPlus = faPlus
 
@@ -101,5 +105,18 @@ export class BoardComponent {
     }
   }
 
+  openDialog(todo: ToDo) {
+    const dialogRef = this.dialog.open(
+      TodoModalComponent, 
+      {
+        minWidth:'300px', 
+        maxWidth:'50%',
+        data: {
+          todo: todo
+        }
+      }
+    )
+    dialogRef.closed.subscribe(output => console.log(output))
+  }
 
 }
