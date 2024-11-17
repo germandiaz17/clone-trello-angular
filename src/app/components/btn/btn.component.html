@@ -1,10 +1,11 @@
 <button 
     [type]="typeBtn"
-    class="text-white w-full font-medium rounded text-sm px-5 py-2 focus:ring-4 " 
+    class="w-full font-medium rounded text-sm text-left px-5 py-2 focus:ring-4 " 
     [ngClass]="{
-    'bg-success-700 hover:bg-success-800 focus:ring-success-300': this.colorBtn === 'success',
-    'bg-primary-700 hover:bg-primary-800 focus:ring-primary-300': this.colorBtn === 'primary',
-    'bg-red-700 hover:bg-red-800 focus:ring-red-300': this.colorBtn === 'red',
+    'text-white bg-success-700 hover:bg-success-800 focus:ring-success-300': this.colorBtn === 'success',
+    'text-white bg-primary-700 hover:bg-primary-800 focus:ring-primary-300': this.colorBtn === 'primary',
+    'text-white bg-red-700 hover:bg-red-800 focus:ring-red-300': this.colorBtn === 'red',
+    'text-gray-700 bg-gray-200 hover:bg-gray-500 focus:ring-gray-50': this.colorBtn === 'gray-light'
     }"
 >
     <ng-content></ng-content>
