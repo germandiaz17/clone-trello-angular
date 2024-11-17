@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component } from '@angular/core';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
